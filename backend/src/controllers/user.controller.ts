@@ -14,11 +14,7 @@ export const Adduser = async (req: Request, res: Response, next: NextFunction) =
                 message: "Please enter all the details"
             });
         }
-        if(await UserService.userExisted(email))
-        {
-            return next({status:409,message:"User Already existed with this email"})
-        }
-        const user=await CreateUser({full_name,email,password});
+        const user=await CreateUser({full_name,email,password},next);
         console.log("user created",user)
         return res.status(200).json({success:true,message:"Created user successfull",user:user})
 

@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetAllUsers = exports.Adduser = void 0;
-const user_existed_1 = __importDefault(require("../validations/user.existed"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const user_service_1 = require("../services/user.service");
 const Adduser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -25,10 +24,7 @@ const Adduser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
                 message: "Please enter all the details"
             });
         }
-        if (yield user_existed_1.default.userExisted(email)) {
-            return next({ status: 409, message: "User Already existed with this email" });
-        }
-        const user = yield (0, user_service_1.CreateUser)({ full_name, email, password });
+        const user = yield (0, user_service_1.CreateUser)({ full_name, email, password }, next);
         console.log("user created", user);
         return res.status(200).json({ success: true, message: "Created user successfull", user: user });
     }
