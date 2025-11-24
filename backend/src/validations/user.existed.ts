@@ -8,14 +8,11 @@ class UserService {
         {
             UserService.instance=new UserService();
         }
-
         return UserService.instance
     }
-
     async userExisted (email:string):Promise<boolean>
     {
         const user=await User.findOne({where:{email}})
-
         return user!==null
     }
 }

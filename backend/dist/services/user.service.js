@@ -25,7 +25,7 @@ const CreateUser = (data, next) => __awaiter(void 0, void 0, void 0, function* (
         email,
         password
     });
-    return user;
+    return user.dataValues;
 });
 exports.CreateUser = CreateUser;
 //# sourceMappingURL=user.service.js.map
