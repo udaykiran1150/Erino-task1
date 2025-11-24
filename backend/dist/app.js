@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 app.use(express_1.default.json());
-app.use("/api/v1", user_route_1.default);
+app.use("/api/v1/user", user_route_1.default);
 app.use((err, req, res, next) => {
     if (err instanceof zod_1.ZodError) {
         return (0, zod_error_1.validationError)(err, res);

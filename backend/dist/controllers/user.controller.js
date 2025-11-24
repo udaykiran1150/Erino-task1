@@ -9,32 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetAllUsers = exports.Adduser = void 0;
+exports.getAllUsers = exports.addUser = void 0;
 const user_service_1 = require("../services/user.service");
 const user_service_2 = require("../services/user.service");
 const user_schema_1 = require("../validations/user.schema");
-const Adduser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const addUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const parsed = user_schema_1.CreateUserSchema.parse({
+        const parsed = user_schema_1.createUserSchema.parse({
             body: req.body
         });
         const { full_name, email, password } = parsed.body;
-        const user = yield (0, user_service_2.CreateUser)({ full_name, email, password }, next);
+        const user = yield (0, user_service_2.createUser)({ full_name, email, password }, res);
         return res.status(200).json({ success: true, message: "Created user successfully", user: user });
     }
     catch (error) {
         next(error);
     }
 });
-exports.Adduser = Adduser;
-const GetAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.addUser = addUser;
+const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield (0, user_service_1.getUsers)();
+        const users = yield (0, user_service_1.getUsers)(res);
         return res.status(200).json(users);
     }
     catch (error) {
         next(error);
     }
 });
-exports.GetAllUsers = GetAllUsers;
+exports.getAllUsers = getAllUsers;
 //# sourceMappingURL=user.controller.js.map

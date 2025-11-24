@@ -12,25 +12,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.CreateUser = void 0;
+exports.getUsers = exports.createUser = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
 const user_existed_1 = __importDefault(require("../validations/user.existed"));
-const CreateUser = (data, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { full_name, email, password } = data;
-    if (yield user_existed_1.default.userExisted(email)) {
-        return next({ status: 409, message: "User Already existed with this email" });
+const user_errors_1 = require("../errorhandling/user.errors");
+const user_errors_2 = require("../errorhandling/user.errors");
+const createUser = (data, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { full_name, email, password } = data;
+        if (yield user_existed_1.default.userExisted(email)) {
+            (0, user_errors_2.userExistedError)(res);
+        }
+        const user = yield user_model_1.default.create({
+            full_name,
+            email,
+            password
+        });
+        return user.dataValues;
     }
-    const user = yield user_model_1.default.create({
-        full_name,
-        email,
-        password
-    });
-    return user.dataValues;
+    catch (error) {
+        (0, user_errors_1.userServiceErrors)(error, res);
+    }
 });
-exports.CreateUser = CreateUser;
-const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_model_1.default.findAll();
-    return users;
+exports.createUser = createUser;
+const getUsers = (res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield user_model_1.default.findAll();
+        return users;
+    }
+    catch (error) {
+        (0, user_errors_1.userServiceErrors)(error, res);
+    }
 });
 exports.getUsers = getUsers;
 //# sourceMappingURL=user.service.js.map
