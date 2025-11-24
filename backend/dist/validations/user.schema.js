@@ -6,7 +6,6 @@ exports.CreateUserSchema = zod_1.z.object({
     body: zod_1.z.object({
         full_name: zod_1.z.string()
             .min(3, "Atleast 3 character are required")
-            // .regex(/^[A-Za-z]$/,"Only letters are neded"),
             .regex(/^[A-Za-z]+$/, "Only letters are needed"),
         email: zod_1.z.string().email("Invalid Email"),
         password: zod_1.z

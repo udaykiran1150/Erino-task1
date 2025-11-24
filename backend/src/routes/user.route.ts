@@ -1,14 +1,10 @@
 import express from "express"
-import { Adduser, GetAllUsers } from "../controllers/user.controller";
+import { addUser, getAllUsers } from "../controllers/user.controller";
 
 import { validate } from '../middlewares/validate'
-import { CreateUserSchema } from "../validations/user.schema";
+import { createUserSchema } from "../validations/user.schema";
+const userRoute = express.Router();
+userRoute.post("/", addUser);
+userRoute.get("/", getAllUsers);
 
-
-const UserRoute = express.Router();
-
-
-UserRoute.post("/user/add-user", validate(CreateUserSchema), Adduser);
-UserRoute.get("/user/get-all-users", GetAllUsers);
-
-export default UserRoute;
+export default userRoute;

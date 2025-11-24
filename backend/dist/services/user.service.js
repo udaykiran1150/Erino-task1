@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUser = void 0;
+exports.getUsers = exports.CreateUser = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
 const user_existed_1 = __importDefault(require("../validations/user.existed"));
 const CreateUser = (data, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,4 +28,9 @@ const CreateUser = (data, next) => __awaiter(void 0, void 0, void 0, function* (
     return user.dataValues;
 });
 exports.CreateUser = CreateUser;
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_model_1.default.findAll();
+    return users;
+});
+exports.getUsers = getUsers;
 //# sourceMappingURL=user.service.js.map
