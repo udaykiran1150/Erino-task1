@@ -1,14 +1,14 @@
 import User from "../models/user.model";
 
-class UserService {
-    private static instance:UserService;
+class UserInstance {
+    private static instance:UserInstance;
     private constructor(){};
     static getInstance(){
-        if(!UserService.instance)
+        if(!UserInstance.instance)
         {
-            UserService.instance=new UserService();
+            UserInstance.instance=new UserInstance();
         }
-        return UserService.instance
+        return UserInstance.instance
     }
     async userExisted (email:string):Promise<boolean>
     {
@@ -17,4 +17,4 @@ class UserService {
     }
 }
 
-export default UserService.getInstance();
+export default UserInstance.getInstance();
