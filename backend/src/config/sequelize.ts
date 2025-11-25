@@ -6,17 +6,20 @@ dotenv.config()
 
 
 const POST_URL=process.env.POSTGRES_URL
-const sequelize = new Sequelize(process.env.POSTGRES_URL, {
-  dialect: "postgres",
-  logging: false, 
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
+const sequelize = new Sequelize(
+  "erino",
+  "postgres",
+  "password",
+  {
+    host: "localhost",
+    dialect: "postgres",
+    port: 5432,
+    logging: false,
+    dialectOptions: {
+      ssl: false,
     },
-  },
-});
-
+  }
+); 
 
 
 export default sequelize;

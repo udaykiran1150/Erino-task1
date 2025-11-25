@@ -10,8 +10,11 @@ const port = 3000;
 
 
 sequelize.authenticate()
-.then(()=>console.log("Database Connected Successfully"))
-.catch(()=>console.log("Error at connecting Database"))
+  .then(() => console.log("Database Connected Successfully"))
+  .catch((err) => {
+    console.error("Error at connecting Database:", err.message);
+  });
+
 
 app.use(cors());
 app.get('/', (req:Request, res:Response) => {

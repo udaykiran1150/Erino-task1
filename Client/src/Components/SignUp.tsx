@@ -26,7 +26,7 @@ const SignUp: React.FC = () => {
     const BackendUrl=import.meta.env.VITE_BACKEND_URL;
     try {
       console.log(formData);
-      const response = await axios.post(`${BackendUrl}/api/v1/user/add-user`, formData);
+      const response = await axios.post(`${BackendUrl}/api/v1/user`, formData);
       console.log(response.data)
       toast.success(response?.data?.message);
 
