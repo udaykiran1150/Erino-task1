@@ -28,7 +28,7 @@ const createUser = (data, res) => __awaiter(void 0, void 0, void 0, function* ()
             email,
             password
         });
-        return user.dataValues;
+        return user;
     }
     catch (error) {
         (0, user_errors_1.userServiceErrors)(error, res);

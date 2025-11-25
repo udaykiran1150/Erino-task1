@@ -26,13 +26,11 @@ User.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    createdAt: {
+    created_at: {
         type: sequelize_1.DataTypes.DATE,
-        field: "created_at"
     },
-    updatedAt: {
+    updated_at: {
         type: sequelize_1.DataTypes.DATE,
-        field: "updated_at"
     }
 }, {
     sequelize: sequelize_2.default,

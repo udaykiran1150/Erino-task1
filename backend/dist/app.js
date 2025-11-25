@@ -11,14 +11,16 @@ const cors_1 = __importDefault(require("cors"));
 const zod_error_1 = require("./errorhandling/zod.error");
 const app = (0, express_1.default)();
 const port = 3000;
+app.use((0, cors_1.default)());
 sequelize_1.default.authenticate()
     .then(() => console.log("Database Connected Successfully"))
-    .catch(() => console.log("Error at connecting Database"));
-app.use((0, cors_1.default)());
+    .catch((err) => {
+    console.error("Error at connecting Database:", err.message);
+});
+app.use(express_1.default.json());
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-app.use(express_1.default.json());
 app.use("/api/v1/user", user_route_1.default);
 app.use((err, req, res, next) => {
     if (err instanceof zod_1.ZodError) {

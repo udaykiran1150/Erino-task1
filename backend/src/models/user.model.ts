@@ -8,44 +8,44 @@ class User extends Model<UserAttributes,UserCreationAttributes>
        public full_name: string;
        public email: string;
        public password: string;
-       public createdAt?: Date;
-       public updatedAt?: Date;
+       public created_at?: Date;
+       public updated_at?: Date;
 }
-User.init({
-    id:{
-        type:DataTypes.UUID,
-        defaultValue:DataTypes.UUIDV4,
-        primaryKey:true
+User.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
-    full_name:{
-        type:DataTypes.STRING,
-        allowNull:false
-
+    full_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    email:{
-        type:DataTypes.STRING,
-        unique:true,
-        allowNull:false,
-    }
-    ,
-    password:{
-        type:DataTypes.STRING,
-        allowNull:false,
-
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
     },
-    createdAt: {
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    created_at: {
       type: DataTypes.DATE,
-      field: "created_at"
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: "updated_at"
-    }
+      defaultValue: DataTypes.NOW,
     
-},{
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+    },
+  },
+  {
     sequelize,
-    tableName:"erinousers",
-    timestamps:true
-})
-
+    tableName: "erinousers",
+    timestamps: false,
+  }
+);
+ 
 export default User;

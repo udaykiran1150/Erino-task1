@@ -18,8 +18,7 @@ const addUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         const parsed = user_schema_1.createUserSchema.parse({
             body: req.body
         });
-        const { full_name, email, password } = parsed.body;
-        const user = yield (0, user_service_2.createUser)({ full_name, email, password }, res);
+        const user = yield (0, user_service_2.createUser)(parsed.body, res);
         return res.status(200).json({ success: true, message: "Created user successfully", user: user });
     }
     catch (error) {
