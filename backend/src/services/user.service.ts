@@ -1,23 +1,24 @@
 import User from "../models/user.model";
-import UserInstance from "../validations/user.validate";
-import { UserProps } from "../types/user.types";
-import { ERROR_MESSAGES } from "../utils/constants"
+import { UserProps } from "../types/user";
+import { ERROR_MESSAGES } from "../utils/error.constants";
+import bcrypt from "bcrypt"
 
 export const createUser = async (data: UserProps) => {
   try {
     const { full_name, email, password } = data;
-    if (await UserInstance.userExisted(email)) {
+    const userExists = await getUserByEmail(email);
+    if (userExists) {
       throw ERROR_MESSAGES.USER.USER_ALREADY_EXISTS;
     }
+    const hashedPassword=await bcrypt.hash(password,10)
     const user = await User.create({
       full_name,
       email,
-      password, 
-      
+      password:hashedPassword,
     });
     return user;
   } catch (error) {
-   throw error
+    throw error;
   }
 };
 
@@ -26,7 +27,16 @@ export const getUsers = async () => {
     const users = await User.findAll();
     return users;
   } catch (error) {
-    throw error
+    throw error;
+  }
+};
+
+export const getUserByEmail = async (email: string) => {
+  try {
+    const user = await User.findOne({ where: { email } });
+    return user;
+  } catch (error) {
+    throw error;
   }
 };
 

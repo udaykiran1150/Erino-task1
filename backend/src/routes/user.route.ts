@@ -1,8 +1,10 @@
-import express from "express"
-import { addUser, getAllUsers } from "../controllers/user.controller";
+import express from "express";
+import { logoutController } from "../controllers/logout.controller";
+import { getProfileController } from "../controllers/getprofile.controller";
 
 const userRoute = express.Router();
-userRoute.post("/", addUser);
-userRoute.get("/", getAllUsers);
+userRoute.get("/profile",getProfileController)
+userRoute.get("/logout",logoutController)
 
 export default userRoute;
+

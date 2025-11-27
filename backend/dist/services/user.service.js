@@ -12,37 +12,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.createUser = void 0;
+exports.getUserByEmail = exports.getUsers = exports.createUser = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
-const user_existed_1 = __importDefault(require("../validations/user.existed"));
-const user_errors_1 = require("../errorhandling/user.errors");
-const user_errors_2 = require("../errorhandling/user.errors");
-const createUser = (data, res) => __awaiter(void 0, void 0, void 0, function* () {
+const error_constants_1 = require("../utils/error.constants");
+const createUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { full_name, email, password } = data;
-        if (yield user_existed_1.default.userExisted(email)) {
-            (0, user_errors_2.userExistedError)(res);
+        const userExists = yield (0, exports.getUserByEmail)(email);
+        if (userExists) {
+            throw error_constants_1.ERROR_MESSAGES.USER.USER_ALREADY_EXISTS;
         }
         const user = yield user_model_1.default.create({
             full_name,
             email,
-            password
+            password,
         });
         return user;
     }
     catch (error) {
-        (0, user_errors_1.userServiceErrors)(error, res);
+        throw error;
     }
 });
 exports.createUser = createUser;
-const getUsers = (res) => __awaiter(void 0, void 0, void 0, function* () {
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield user_model_1.default.findAll();
         return users;
     }
     catch (error) {
-        (0, user_errors_1.userServiceErrors)(error, res);
+        throw error;
     }
 });
 exports.getUsers = getUsers;
+const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield user_model_1.default.findOne({ where: { email } });
+        return user;
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.getUserByEmail = getUserByEmail;
 //# sourceMappingURL=user.service.js.map

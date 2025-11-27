@@ -8,27 +8,27 @@ const zod_1 = require("zod");
 const sequelize_1 = __importDefault(require("./config/sequelize"));
 const user_route_1 = __importDefault(require("./routes/user.route"));
 const cors_1 = __importDefault(require("cors"));
-const zod_error_1 = require("./errorhandling/zod.error");
+const error_constants_1 = require("./utils/error.constants");
 const app = (0, express_1.default)();
 const port = 3000;
 app.use((0, cors_1.default)());
-sequelize_1.default.authenticate()
+app.use(express_1.default.json());
+sequelize_1.default
+    .authenticate()
     .then(() => console.log("Database Connected Successfully"))
     .catch((err) => {
     console.error("Error at connecting Database:", err.message);
 });
-app.use(express_1.default.json());
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get("/", (req, res) => {
+    res.send("Hello World!");
 });
 app.use("/api/v1/user", user_route_1.default);
 app.use((err, req, res, next) => {
-    if (err instanceof zod_1.ZodError) {
-        return (0, zod_error_1.validationError)(err, res);
-    }
+    if (err instanceof zod_1.ZodError)
+        return (0, error_constants_1.validationError)(err, res);
     return res.status(err.status || 500).json({
         success: false,
-        message: err.message || "Internal Server Error"
+        message: err.message || "Internal Server Error",
     });
 });
 app.listen(port, () => {

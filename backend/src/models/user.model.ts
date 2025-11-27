@@ -1,15 +1,17 @@
-import { DataTypes,Optional,Model } from "sequelize";
+import { DataTypes, Optional, Model } from "sequelize";
 import sequelize from "../config/sequelize";
-import { UserAttributes } from "../types/user.types";
-interface UserCreationAttributes extends Optional<UserAttributes,"id">{}
-class User extends Model<UserAttributes,UserCreationAttributes>
- implements UserAttributes{
-       public id:string;
-       public full_name: string;
-       public email: string;
-       public password: string;
-       public created_at?: Date;
-       public updated_at?: Date;
+import { UserAttributes } from "../types/user";
+interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
+  public id: string;
+  public full_name: string; 
+  public email: string;
+  public password: string;
+  public created_at?: Date; 
+  public updated_at?: Date;
 }
 User.init(
   {
@@ -34,11 +36,10 @@ User.init(
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-    
     },
     updated_at: {
       type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+      defaultValue: DataTypes.NOW,
     },
   },
   {
@@ -47,5 +48,5 @@ User.init(
     timestamps: false,
   }
 );
- 
+
 export default User;

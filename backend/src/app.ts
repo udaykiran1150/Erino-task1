@@ -1,40 +1,47 @@
-import express,{ NextFunction, Request,Response } from 'express';
-import { ZodError } from 'zod';
-import sequelize from './config/sequelize';
-import userRoute from './routes/user.route';
-import cors from "cors"
-import { validationError } from './utils/constants';
+import express, { NextFunction, Request, Response } from "express";
+import { ZodError } from "zod";
+import sequelize from "./config/sequelize";
+import userRoute from "./routes/user.route";
+import cors from "cors";
+import { validationError } from "./utils/error.constants";
+import authRouter from "./routes/auth.route";
+import cookieParser from "cookie-parser"
+import { authenticateUser } from "./middleware/auth";
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 app.use(express.json());
+app.use(cookieParser());
 
-sequelize.authenticate()
+sequelize
+  .authenticate()
   .then(() => console.log("Database Connected Successfully"))
   .catch((err) => {
     console.error("Error at connecting Database:", err.message);
   });
+ 
 
-app.get('/', (req:Request, res:Response) => {
-  res.send('Hello World!');
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello World!");
 });
 
-app.use("/api/v1/user",userRoute)
+app.use("/api/v1/user",authenticateUser, userRoute);
+app.use("/api/v1/auth",authRouter); 
+
 
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof ZodError)return validationError(err,res);
+  if (err instanceof ZodError) return validationError(err, res);
   return res.status(err.status || 500).json({
     success: false,
-    message: err.message || "Internal Server Error"
+    message: err.message || "Internal Server Error",
   });
 });
 
 app.listen(port, () => {
   return console.log(`Express  listening at http://localhost:${port}`);
 });
-
-
-
-

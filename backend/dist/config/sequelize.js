@@ -6,11 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const POST_URL = process.env.POSTGRES_URL;
-const sequelize = new sequelize_1.Sequelize("erino", "postgres", "password", {
-    host: "localhost",
+const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
+const sequelize = new sequelize_1.Sequelize(DB_CONNECTION_STRING, {
     dialect: "postgres",
-    port: 5432,
     logging: false,
     dialectOptions: {
         ssl: false,

@@ -1,6 +1,7 @@
-import React from 'react'
-import axios from 'axios';
-import {toast} from "react-toastify"
+import React from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 interface FormTypes {
   full_name: string;
   email: string;
@@ -8,10 +9,11 @@ interface FormTypes {
 }
 
 const SignUp: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState<FormTypes>({
     full_name: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,28 +23,32 @@ const SignUp: React.FC = () => {
     });
   };
 
-  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const BackendUrl=import.meta.env.VITE_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
       console.log(formData);
-      const response = await axios.post(`${BackendUrl}/api/v1/user`, formData);
-      console.log(response.data)
-      toast.success(response?.data?.message);
+      const response = await axios.post(
+        `${BackendUrl}/api/v1/auth/sign-up`,
+        formData,{ withCredentials: true }
+      );
 
-    } catch (error:any) {
-      
-      console.log("Error",error?.response?.data?.errors)
-      toast.error(error?.response?.data?.errors)
+      if(response?.data?.success )
+      {
+        navigate("/home");
+      }
+      toast.success(response?.data?.message);
+    } catch (error: any) {
+      console.log("Error", error?.response?.data?.errors);
+      toast.error(error?.response?.data?.errors);
     }
   };
 
   return (
-    <form 
+    <form
       onSubmit={handleSubmit}
       className="flex flex-col gap-4 border p-6 rounded-lg shadow-lg w-80"
     >
-
       <div>
         <p>Enter Name</p>
         <input
@@ -78,14 +84,18 @@ const SignUp: React.FC = () => {
           className="border p-2 rounded w-full"
         />
       </div>
-
+      <div>
+        <p className="text-blue-500  text-sm" onClick={() => navigate("/")}>
+          Already have an Account?
+          <span className="hover:underline hover:pointer">singin</span>
+        </p>
+      </div>
       <button
         type="submit"
         className="bg-purple-500 text-white rounded-2xl p-3 hover:bg-purple-600"
       >
         Submit
       </button>
-
     </form>
   );
 };

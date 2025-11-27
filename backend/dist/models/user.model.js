@@ -11,11 +11,11 @@ User.init({
     id: {
         type: sequelize_1.DataTypes.UUID,
         defaultValue: sequelize_1.DataTypes.UUIDV4,
-        primaryKey: true
+        primaryKey: true,
     },
     full_name: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     email: {
         type: sequelize_1.DataTypes.STRING,
@@ -28,14 +28,16 @@ User.init({
     },
     created_at: {
         type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
     },
     updated_at: {
         type: sequelize_1.DataTypes.DATE,
-    }
+        defaultValue: sequelize_1.DataTypes.NOW,
+    },
 }, {
     sequelize: sequelize_2.default,
     tableName: "erinousers",
-    timestamps: true
+    timestamps: false,
 });
 exports.default = User;
 //# sourceMappingURL=user.model.js.map
