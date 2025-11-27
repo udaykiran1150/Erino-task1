@@ -11,3 +11,8 @@ declare global {
   }
 }
 export {};
+
+
+export  interface CustomTypes {
+    
+}
