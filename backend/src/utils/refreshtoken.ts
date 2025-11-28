@@ -17,17 +17,16 @@ export const refresh = async (
 ) => {
   try {
     const refreshToken = req.cookies?.refresh_token;
-    console.log(req.cookies)
+
     if (!refreshToken) throw ERROR_MESSAGES.AUTH.MISSING_REFRESH_TOKEN; //
     let decoded: any;
-    console.log(process.env.JWT_SECRET)
     try {
       decoded = jwt.verify(refreshToken, process.env.JWT_SECRET!);
     } catch (err: any) {
-        console.log(err)
+
       return next(err);
     }
-    console.log(decoded)
+
     const saved = await getSavedTokens(decoded.id);
     if (!saved) throw ERROR_MESSAGES.AUTH.SESSION_NOT_FOUND;
     const isMatch=await bcrypt.compare(refreshToken,saved.token_encrypted);
@@ -42,7 +41,6 @@ export const refresh = async (
     });
     await createTokens({ user_id: decoded.id, token_encrypted: newRefresh });
     setAuthCookies(res, newAccess, newRefresh);
-    // return res.json({ message: "Token refreshed" });
     next()
   } catch (err) {
     next(err);

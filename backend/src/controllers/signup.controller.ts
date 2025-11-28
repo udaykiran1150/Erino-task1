@@ -16,21 +16,20 @@ export const singUpController = async (
 ) => {
   try {
     const {full_name,email,password,role,tenant_name}=req.body;
-    console.log({full_name,email,password,role,tenant_name})
-    const input = createUserSchema.parse({full_name,email,password,role});
-    
-    
+    const input = createUserSchema.parse(req.body);
     const {user,tenant} = await createUser(input,tenant_name);
     const access_token = generateAccessToken({
       id: user.id,
       email: user.email,
-      role:user.role
+      role:user.role,
+      tenant_id:user.tenant_id
       
     });
     const refresh_token = generateRefreshToken({
       id: user.id,
       email: user.email,
-      role:user.role
+      role:user.role,
+      tenant_id:user.tenant_id
     });
     const tokens = await createTokens({
       user_id: user.id,

@@ -3,13 +3,13 @@ import { ZodError } from "zod";
 import sequelize from "./config/sequelize";
 import userRoute from "./routes/user.route";
 import cors from "cors";
-import { validationError } from "./utils/error.constants";
+import { validationError } from "./utils/validatio.error";
 import authRouter from "./routes/auth.route";
 import cookieParser from "cookie-parser"
 import { authenticateUser } from "./middleware/auth";
 import adminRouter from "./routes/admin.routes";
-import { authorizeRoles } from "./middleware/authorizeroles";
-import "./models"
+import { authorizeRoles } from "./middleware/authorizeRoles";
+import "./models/associations"
 const app = express();
 const port = 3000;
 
@@ -19,12 +19,6 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
-
-
-
-  // sequelize.sync()
-  // .then(()=>console.log("synced") )
-  // .catch((err)=>console.log(err))
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");

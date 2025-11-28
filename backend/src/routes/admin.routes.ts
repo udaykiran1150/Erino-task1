@@ -1,6 +1,6 @@
-import { createUserController } from "../controllers/createuser.controller";
+import { createUserController } from "../controllers/createUser.controller";
 import { authenticateUser } from "../middleware/auth";
-import { authorizeRoles } from "../middleware/authorizeroles";
+import { authorizeRoles } from "../middleware/authorizeRoles";
 import express from "express";
 
 const adminRouter=express.Router();
