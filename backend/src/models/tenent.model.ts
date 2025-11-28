@@ -1,5 +1,5 @@
 import sequelize from "../config/sequelize";
-import { TenantAttributes } from "../types/user";
+import { TenantAttributes } from "../types/tenantTypes";
 
 import { Model, DataType, Optional, DataTypes, UUIDV4 } from "sequelize";
 import User from "./user.model";

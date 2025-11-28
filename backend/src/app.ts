@@ -3,12 +3,12 @@ import { ZodError } from "zod";
 import sequelize from "./config/sequelize";
 import userRoute from "./routes/user.route";
 import cors from "cors";
-import { validationError } from "./utils/validatio.error";
+import { validationError } from "./utils/validation.error";
 import authRouter from "./routes/auth.route";
 import cookieParser from "cookie-parser"
 import { authenticateUser } from "./middleware/auth";
 import adminRouter from "./routes/admin.routes";
-import { authorizeRoles } from "./middleware/authorizeRoles";
+import { authorizeRoles } from "./middleware/authorizeroles";
 import "./models/associations"
 const app = express();
 const port = 3000;
@@ -29,6 +29,7 @@ app.use("/api/v1/auth",authRouter);
 app.use("/api/v1/admin",authenticateUser,authorizeRoles("admin"),adminRouter)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  
   if (err instanceof ZodError) return validationError(err, res);
   return res.status(err.status || 500).json({
     success: false,

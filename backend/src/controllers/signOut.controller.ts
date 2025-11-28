@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { verifyToken } from "../utils/jwt.token";
 import { clearTokens } from "../services/tokens";
 import { CustomResponse } from "../types/cutomTypes";
 

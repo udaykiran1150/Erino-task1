@@ -8,10 +8,10 @@ export const createUserController = async (
   next: NextFunction
 ) => {
   try {
-     const {full_name,email,password,role,tenant_name}=req.body;
+     const {full_name,email,password,role}=req.body;
      const input = createUserSchema.parse(req.body); 
-     const user = await createUserByAdmin(input,tenant_name,req.user.tenant_id);
-    return res.status(200).json({
+     const user = await createUserByAdmin(input,req.user.tenant_id);
+    return res.status(201).json({
       success: true,
       message: "Created user successfully",
       user: user,
