@@ -27,7 +27,7 @@ const SignUp: React.FC = () => {
     e.preventDefault();
     const BackendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
-      console.log(formData);
+
       const response = await axios.post(
         `${BackendUrl}/api/v1/auth/sign-up`,
         formData,{ withCredentials: true }
@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
       }
       toast.success(response?.data?.message);
     } catch (error: any) {
-      console.log("Error", error?.response?.data?.errors);
+
       toast.error(error?.response?.data?.errors);
     }
   };

@@ -13,9 +13,9 @@ const SignIn: React.FC = () => {
     e.preventDefault();
     const BackendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
-      console.log(formData);
+
       const response = await login(formData);
-      console.log(response.data);
+
       if(response?.data?.success)
       {
        navigate("/home");
@@ -24,8 +24,8 @@ const SignIn: React.FC = () => {
     
       toast.success(response?.data?.message);
     } catch (error) {
-  console.log("error occured");
-      console.log("Error", error);
+
+
     //   toast.error(error?.response?.data?.message);
     }
   };

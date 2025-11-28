@@ -14,11 +14,11 @@ const Home:React.FC = () => {
         try {
             setLoading(true);
            const response = await api.get("/api/v1/auth/profile")
-            console.log(response.data.data);
+     
             setUserData(response.data.data);
             setLoading(false);
         } catch (error: any) {
-            console.log("Error", error);
+
             toast.error(error?.response?.data?.message);
             setLoading(false);
         }
