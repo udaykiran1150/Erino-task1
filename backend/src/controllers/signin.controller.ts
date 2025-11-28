@@ -25,10 +25,11 @@ export const signInController = async (
     if (!isMatch) {
       throw ERROR_MESSAGES.AUTH.PASSWORD_MISMATCH;
     }
-    const accessToken = generateAccessToken({ id: user.id, email: user.email });
+    const accessToken = generateAccessToken({ id: user.id, email: user.email,role:user.role });
     const refreshToken = generateRefreshToken({
       id: user.id,
       email: user.email,
+      role:user.role
     });
     await createTokens({ user_id: user.id, token_encrypted: refreshToken });
     setAuthCookies(res, accessToken, refreshToken);

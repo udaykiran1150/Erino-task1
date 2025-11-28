@@ -1,10 +1,11 @@
 import { NextFunction,Request,Response } from "express";
 import { verifyToken } from "../utils/jwt.token";
 import { clearTokens } from "../services/tokens";
+import { CustomResponse } from "../types/user";
 
 export const logoutController = async (
   req: Request,
-  res: Response,
+  res: CustomResponse,
   next: NextFunction
 ) => {
   try {
@@ -12,7 +13,7 @@ export const logoutController = async (
     if (refreshToken) {
       const decoded: any = verifyToken(refreshToken);
     }
-    clearTokens(res)
+    clearTokens(res);
     return res
       .status(200)
       .json({ success: true, message: "Logged out successfully" });

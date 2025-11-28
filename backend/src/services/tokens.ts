@@ -2,6 +2,7 @@ import Tokens from "../models/refreshtokens.model";
 import { CreateTokenInputs,TokenTypes } from "../types/tokens";
 import bcrypt from "bcrypt";
 import { Response } from "express";
+import { CustomResponse } from "../types/user";
 
 export const createTokens = async (payload: CreateTokenInputs) => {
   try {
@@ -20,7 +21,7 @@ export const createTokens = async (payload: CreateTokenInputs) => {
   }
 };
 
-export const clearTokens=async(res:Response)=>
+export const clearTokens=async(res:CustomResponse)=>
 {
    try {
     res.clearCookie("access_token");

@@ -40,6 +40,10 @@ export const ERROR_MESSAGES = {
     PASSWORD_MISMATCH:{
       status:401,
       message:"Incorrect password"
+    },
+    ACCESS_DENIED:{
+      status:403,
+      message :"You are not allowed to Add new User"
     }
   }
 };

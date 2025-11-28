@@ -4,8 +4,10 @@ import { NextFunction, Request, Response } from "express";
 import { ERROR_MESSAGES } from "../utils/error.constants";
 import { refresh } from "../utils/refreshtoken";
 
+import { CustomRequest } from "../types/user";
+
 export const authenticateUser = async (
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -17,7 +19,8 @@ export const authenticateUser = async (
 
     
     const decoded = await verifyToken(accessToken);
-    req.user = decoded;
+    console.log(decoded)
+     req.user = decoded;
    
     next();
   } catch (error) {

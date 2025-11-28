@@ -7,6 +7,9 @@ import { validationError } from "./utils/error.constants";
 import authRouter from "./routes/auth.route";
 import cookieParser from "cookie-parser"
 import { authenticateUser } from "./middleware/auth";
+import adminRouter from "./routes/admin.routes";
+import { authorizeRoles } from "./middleware/authorizeroles";
+import "./models"
 const app = express();
 const port = 3000;
 
@@ -17,13 +20,11 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-sequelize
-  .authenticate()
-  .then(() => console.log("Database Connected Successfully"))
-  .catch((err) => {
-    console.error("Error at connecting Database:", err.message);
-  });
- 
+
+
+  // sequelize.sync()
+  // .then(()=>console.log("synced") )
+  // .catch((err)=>console.log(err))
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
@@ -31,8 +32,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/v1/user",authenticateUser, userRoute);
 app.use("/api/v1/auth",authRouter); 
-
-
+app.use("/api/v1/admin",authenticateUser,authorizeRoles("admin"),adminRouter)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof ZodError) return validationError(err, res);

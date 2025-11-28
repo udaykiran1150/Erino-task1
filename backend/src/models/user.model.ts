@@ -1,6 +1,7 @@
 import { DataTypes, Optional, Model } from "sequelize";
 import sequelize from "../config/sequelize";
 import { UserAttributes } from "../types/user";
+import Tenant from "./tenent.model";
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 class User
   extends Model<UserAttributes, UserCreationAttributes>
@@ -10,6 +11,8 @@ class User
   public full_name: string; 
   public email: string;
   public password: string;
+  public tenant_id:string
+  public role :string
   public created_at?: Date; 
   public updated_at?: Date;
 }
@@ -33,6 +36,19 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    tenant_id:{
+      type:DataTypes.UUID,
+      allowNull:false,
+      references:{
+        model:Tenant,
+        key:"id"
+      }
+    },
+    role:{
+      type:DataTypes.ENUM("member","admin"),
+      allowNull:false
+      
+    },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -44,9 +60,13 @@ User.init(
   },
   {
     sequelize,
+    modelName:'erinousers',
     tableName: "erinousers",
     timestamps: false,
   }
 );
+
+
+
 
 export default User;

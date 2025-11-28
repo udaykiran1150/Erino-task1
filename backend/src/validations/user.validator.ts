@@ -18,6 +18,9 @@ export const createUserSchema = z.object({
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
     .regex(/[a-z]/, "Password must contain at least one lowercase letter.")
     .regex(/[0-9]/, "Password must contain at least one number."),
+
+    role:z.string(),
+    
 });
 
 export type CreateUserSchemaType = z.infer<typeof createUserSchema>;
@@ -36,3 +39,8 @@ export const loginSchema=z.object({
     
 })
 export type LoginSchemaType=z.infer<typeof loginSchema>;
+
+
+export const createTenantSchema=z.object({
+  tenant_name:z.string()
+})

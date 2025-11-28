@@ -8,5 +8,10 @@ const sequelize = new Sequelize(DB_CONNECTION_STRING, {
   dialectOptions: {
     ssl: false,
   },
+  define: {
+    underscored: true,  
+    freezeTableName: true, 
+    timestamps: true,
+  },
 });
 export default sequelize;
