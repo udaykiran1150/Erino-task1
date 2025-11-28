@@ -1,4 +1,4 @@
-import { Request,Response,NextFunction } from "express";
+import { Response,NextFunction } from "express";
 import { getUserByEmail } from "../services/user.service";
 import { ERROR_MESSAGES } from "../utils/error.constants";
 import { CustomRequest } from "../types/cutomTypes";

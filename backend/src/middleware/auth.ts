@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt";
 import { verifyToken } from "../utils/jwt.token";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction,Response } from "express";
 import { ERROR_MESSAGES } from "../utils/error.constants";
 import { CustomRequest } from "../types/cutomTypes";
+import { refresh } from "../utils/refreshtoken";
 
 
 export const authenticateUser = async (
@@ -21,6 +21,10 @@ export const authenticateUser = async (
    
     next();
   } catch (error) {
+    if (error.message === "TokenExpiredError") {
+      return refresh(req, res, next);
+    }
+
     next(error);
   }
 };

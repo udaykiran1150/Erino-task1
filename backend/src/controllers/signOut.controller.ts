@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request } from "express";
 import { clearTokens } from "../services/tokens";
 import { CustomResponse } from "../types/cutomTypes";
 

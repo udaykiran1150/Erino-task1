@@ -24,3 +24,5 @@ export const deleteToken = async (user_id: string, token_encrypted: string) => {
     throw error;
   }
 };
+
+

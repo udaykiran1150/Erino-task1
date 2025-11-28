@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
-import sequelize from "./config/sequelize";
 import userRoute from "./routes/user.route";
 import cors from "cors";
 import { validationError } from "./utils/validation.error";

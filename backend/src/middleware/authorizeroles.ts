@@ -1,4 +1,4 @@
-import { NextFunction, Request,Response } from "express";
+import { NextFunction,Response } from "express";
 import { CustomRequest } from "../types/cutomTypes";
 import { ERROR_MESSAGES } from "../utils/error.constants";
 export const authorizeRoles=(...allowedRoles)=>

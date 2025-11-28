@@ -1,4 +1,4 @@
-import { Response } from "express";
+
 
 export const ERROR_MESSAGES = {
   USER: {
@@ -15,7 +15,7 @@ export const ERROR_MESSAGES = {
     ,
     MISSING_REFRESH_TOKEN:{
       status:401,
-      message :"No Access Token Provided"
+      message :"No Refresh Token Provided"
     },
     INVALID_REFRESH_TOKEN:{
       status:401,

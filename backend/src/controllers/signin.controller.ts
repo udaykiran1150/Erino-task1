@@ -8,11 +8,11 @@ export const signInController = async (
   next: NextFunction
 ) => {
   try {
-     const {user, accessToken, refreshToken}=await signInService(req,res)
+     const {user}=await signInService(req,res)
      return res.status(200).json({
       success: true,
       message: "User Login Successfully",
-      data: { user, accessToken, refreshToken },
+      data: { user},
     });
   } catch (error) {
     next(error);

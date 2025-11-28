@@ -1,10 +1,9 @@
-import { where } from "sequelize";
 import Tenant from "../models/tenent.model";
 import User from "../models/user.model";
 import { UserProps } from "../types/user";
 import { CustomRequest } from "../types/cutomTypes";
 import { ERROR_MESSAGES } from "../utils/error.constants";
-import bcrypt from "bcrypt";
+import { hashPassword } from "../utils/auth";
 
 export const createUser = async (userData: UserProps, tenant_name: string) => {
   try {
@@ -14,7 +13,7 @@ export const createUser = async (userData: UserProps, tenant_name: string) => {
       throw ERROR_MESSAGES.USER.USER_ALREADY_EXISTS;
     }
     const tenant = await Tenant.create({ tenant_name });
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password)
     const user = await User.create({
       full_name,
       email,
@@ -24,8 +23,6 @@ export const createUser = async (userData: UserProps, tenant_name: string) => {
     });
 
     tenant.created_by = user.id;
-
-    await user.save();
     await tenant.save();
 
     return { user, tenant };
@@ -44,7 +41,7 @@ export const createUserByAdmin = async (
     if (userExists) {
       throw ERROR_MESSAGES.USER.USER_ALREADY_EXISTS;
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password);
     const user = await User.create({
       full_name,
       email,
@@ -60,11 +57,10 @@ export const createUserByAdmin = async (
 
 export const getUsers = async (req: CustomRequest) => {
   try {
+    console.log(req.user)
     const users = await User.findAll({
-      where: { tenant_id: req.user.tenant_id },
-      attributes: {
-        exclude: ["password", "tenant_id"],
-      },
+      where: { tenant_id: req.user.tenant_id }
+      
     });
     return users;
   } catch (error) {
